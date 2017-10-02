@@ -20,7 +20,25 @@ def alignment(s1, s2, print_option = 0):
     s1 is going vertically down the rows, s2 horizontal across columns
     returns the score in the bottom right
     '''
-    # to do     
+    a = []
+    s1 = '_' + s1
+    s2 = '_' + s2
+    n = len(s1) # the size of the 2d array will include initialization row/col
+    a.append(range(0,-n,-1))
+    for i in xrange(1,n):
+        a.append([-i] + [0] * (n-1))
+    # append an underscore so that i can access the strings the same as the array
+
+    
+    for row in xrange(1,n):
+        for col in xrange(1,n):
+            if s1[row] == s2[col]:
+                a[row][col] = max(a[row-1][col]-1, a[row-1][col-1], a[row][col-1]-1)
+            else:
+                a[row][col] = max(a[row-1][col]-1, a[row-1][col-1]-1, a[row][col-1]-1)
+    if print_option != 0:
+        print_matrix(a)
+    return -a[-1][-1]     
 
 def count_mismatches(s1, s2):
     '''
